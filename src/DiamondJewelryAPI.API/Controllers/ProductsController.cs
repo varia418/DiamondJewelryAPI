@@ -1,16 +1,18 @@
 using BuberDinner.Api.Controllers;
 
+using DiamondJewelryAPI.Contracts.Products;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiamondJewelryAPI.API.Controllers;
 
 [AllowAnonymous]
-public class TestController : ApiController
+public class ProductsController : ApiController
 {
     [HttpGet("[controller]")]
-    public IActionResult Test()
+    public IActionResult GetProducts([FromQuery] GetProductsRequest request)
     {
-        return Problem();
+        return Ok(request);
     }
 }

@@ -4,13 +4,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace DiamondJewelryAPI.API.Models;
 
-[BsonIgnoreExtraElements]
-public class Product
+public class Product : BaseModel
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    [BsonElement("_id")]
-    public string? Id { get; init; }
     [BsonElement("title")]
     public string Title { get; init; } = String.Empty;
     [BsonElement("price")]

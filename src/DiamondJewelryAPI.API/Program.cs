@@ -12,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.Configure<DiamondJewelryDBSettings>(
         builder.Configuration.GetSection("DiamondJewelryDB"));
+    builder.Services.AddSingleton<IDiamondJewelryDBSettings>(sp =>
+                sp.GetRequiredService<IOptions<DiamondJewelryDBSettings>>().Value);
 
     builder.Services.AddScoped<IMongoContext, MongoContext>();
     builder.Services.AddScoped<IProductRepository, ProductRepository>();

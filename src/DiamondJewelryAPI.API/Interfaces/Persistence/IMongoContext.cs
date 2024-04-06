@@ -13,10 +13,10 @@ public interface IMongoContext
 
 public class MongoContext : IMongoContext
 {
-    public MongoContext(IOptions<DiamondJewelryDBSettings> connectionSetting)
+    public MongoContext(IDiamondJewelryDBSettings connectionSetting)
     {
-        var client = new MongoClient(connectionSetting.Value.ConnectionString);
-        Database = client.GetDatabase(connectionSetting.Value.DatabaseName);
+        var client = new MongoClient(connectionSetting.ConnectionString);
+        Database = client.GetDatabase(connectionSetting.DatabaseName);
     }
 
     public IMongoDatabase Database { get; }

@@ -1,5 +1,6 @@
 using BuberDinner.Api.Controllers;
 
+using DiamondJewelryAPI.API.Services;
 using DiamondJewelryAPI.Contracts.Products;
 
 using Microsoft.AspNetCore.Authorization;
@@ -10,9 +11,17 @@ namespace DiamondJewelryAPI.API.Controllers;
 [AllowAnonymous]
 public class ProductsController : ApiController
 {
-    [HttpGet("[controller]")]
-    public IActionResult GetProducts([FromQuery] GetProductsRequest request)
+    private readonly MongoDBService _mongoDBService;
+
+    public ProductsController(MongoDBService mongoDBService)
     {
-        return Ok(request);
+        _mongoDBService = mongoDBService;
+    }
+
+    [HttpGet("[controller]")]
+    public async Task<IActionResult> GetProducts([FromQuery] GetProductsRequest request)
+    {
+        var products = await _mongoDBService.GetProducts();
+        return Ok(products);
     }
 }

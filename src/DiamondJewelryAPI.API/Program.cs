@@ -20,7 +20,6 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddScoped<IProductService, ProductService>();
 }
 
-
 var app = builder.Build();
 {
     app.UseExceptionHandler("/error");

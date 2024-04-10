@@ -15,10 +15,10 @@ public abstract class BaseRepository<TModel> : IRepository<TModel> where TModel 
         DbSet = Database.GetCollection<TModel>(typeof(TModel).Name.ToLower() + "s");
     }
 
-    public virtual async Task<TModel> Add(TModel obj)
+    public virtual async Task<IEnumerable<TModel>> GetAll()
     {
-        await DbSet.InsertOneAsync(obj);
-        return obj;
+        var all = await DbSet.FindAsync(Builders<TModel>.Filter.Empty);
+        return all.ToList();
     }
 
     public virtual async Task<TModel> GetById(string id)
@@ -27,10 +27,10 @@ public abstract class BaseRepository<TModel> : IRepository<TModel> where TModel 
         return data;
     }
 
-    public virtual async Task<IEnumerable<TModel>> GetAll()
+    public virtual async Task<TModel> Create(TModel model)
     {
-        var all = await DbSet.FindAsync(Builders<TModel>.Filter.Empty);
-        return all.ToList();
+        await DbSet.InsertOneAsync(model);
+        return model;
     }
 
     public async virtual Task<TModel> Update(string id, TModel obj)
@@ -39,33 +39,18 @@ public abstract class BaseRepository<TModel> : IRepository<TModel> where TModel 
         return obj;
     }
 
-    public async virtual Task<bool> Remove(string id)
+    public async virtual Task Delete(string id)
     {
-        var result = await DbSet.DeleteOneAsync(FilterId(id));
-        return result.IsAcknowledged;
+        await DbSet.DeleteOneAsync(FilterId(id));
     }
 
-    public void Dispose()
-    {
-        GC.SuppressFinalize(this);
-    }
     private static FilterDefinition<TModel> FilterId(string key)
     {
         return Builders<TModel>.Filter.Eq("Id", key);
     }
 
-    public Task<List<TModel>> Get()
+    public void Dispose()
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<TModel> Create(TModel model)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task Delete(string id)
-    {
-        throw new NotImplementedException();
+        GC.SuppressFinalize(this);
     }
 }

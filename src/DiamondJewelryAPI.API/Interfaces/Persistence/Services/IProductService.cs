@@ -1,12 +1,14 @@
 using DiamondJewelryAPI.API.Models;
 
+using ErrorOr;
+
 namespace DiamondJewelryAPI.API.Interfaces.Persistence.Services;
 
 public interface IProductService
 {
-    Task<IEnumerable<Product>> GetProducts();
-    Task<Product> GetProduct(string id);
-    Task<Product> CreateProduct(Product product);
-    Task<Product> UpdateProduct(string id, Product product);
-    Task DeleteProduct(string id);
+    Task<ErrorOr<IEnumerable<Product>>> GetProducts();
+    Task<ErrorOr<Product>> GetProduct(string id);
+    Task<ErrorOr<Product>> CreateProduct(Product product);
+    Task<ErrorOr<Product>> UpdateProduct(string id, Product product);
+    Task<ErrorOr<Deleted>> DeleteProduct(string id);
 }

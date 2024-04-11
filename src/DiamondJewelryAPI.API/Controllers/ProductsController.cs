@@ -1,7 +1,10 @@
 using BuberDinner.Api.Controllers;
 
 using DiamondJewelryAPI.API.Interfaces.Persistence.Services;
+using DiamondJewelryAPI.API.Models;
 using DiamondJewelryAPI.Contracts.Products.Requests;
+
+using ErrorOr;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +24,11 @@ public class ProductsController : ApiController
     [HttpGet]
     public async Task<IActionResult> GetProducts([FromQuery] GetProductsRequest request)
     {
-        var products = await _productService.GetProducts();
-        return Ok(products);
+        ErrorOr<IEnumerable<Product>> getProductsResult = await _productService.GetProducts();
+
+        return getProductsResult.Match(
+            products => Ok(products),
+            errors => Problem(errors)
+        );
     }
 }

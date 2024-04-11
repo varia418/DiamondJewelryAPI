@@ -1,4 +1,4 @@
-﻿namespace DiamondJewelryAPI.Contracts.Products;
+﻿namespace DiamondJewelryAPI.Contracts.Products.Requests;
 
 public record GetProductsRequest(
     string? Brand,

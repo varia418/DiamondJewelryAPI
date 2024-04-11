@@ -8,7 +8,7 @@ public record User(
     string Email,
     string Address,
     string Password,
-    List<FavoriteProduct> FavouriteProducts,
+    List<FavoriteProduct> FavoriteProducts,
     string Role,
     string Provider
 );

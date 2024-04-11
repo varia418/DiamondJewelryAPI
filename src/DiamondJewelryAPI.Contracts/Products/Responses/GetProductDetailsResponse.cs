@@ -1,4 +1,4 @@
-using DiamondJewelryAPI.Contracts.Products.Common;
+using DiamondJewelryAPI.Contracts.Common;
 
 namespace DiamondJewelryAPI.Contracts.Products.Responses;
 

@@ -1,4 +1,4 @@
-namespace DiamondJewelryAPI.Contracts.Products.Common;
+namespace DiamondJewelryAPI.Contracts.Common;
 
 public record Product(
     string Id,

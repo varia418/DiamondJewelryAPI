@@ -1,7 +1,7 @@
 using BuberDinner.Api.Controllers;
 
 using DiamondJewelryAPI.API.Interfaces.Persistence.Services;
-using DiamondJewelryAPI.Contracts.Products;
+using DiamondJewelryAPI.Contracts.Products.Requests;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

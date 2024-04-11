@@ -18,7 +18,7 @@ public class ProductsController : ApiController
         _productService = productService;
     }
 
-    [HttpGet("[controller]")]
+    [HttpGet]
     public async Task<IActionResult> GetProducts([FromQuery] GetProductsRequest request)
     {
         var products = await _productService.GetProducts();

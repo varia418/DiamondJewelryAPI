@@ -26,6 +26,8 @@ public class Product : BaseModel
     [BsonElement("created_at")]
     public DateTime CreatedAt { get; }
 
+    public Product() { }
+
     private Product(
         string title,
         float price,

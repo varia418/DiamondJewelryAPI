@@ -1,3 +1,4 @@
+using DiamondJewelryAPI.API.Common.Mapping;
 using DiamondJewelryAPI.API.Interfaces.Persistence;
 using DiamondJewelryAPI.API.Interfaces.Persistence.Services;
 using DiamondJewelryAPI.API.Models;
@@ -17,7 +18,10 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddScoped<IMongoContext, MongoContext>();
     builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
     builder.Services.AddScoped<IProductService, ProductService>();
+
+    builder.Services.AddMappings();
 }
 
 var app = builder.Build();

@@ -37,6 +37,17 @@ public class ProductsController : ApiController
         );
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetProductDetails(string id)
+    {
+        ErrorOr<Product> getProductDetailsResult = await _productService.GetProduct(id);
+
+        return getProductDetailsResult.Match(
+            product => Ok(product),
+            errors => Problem(errors)
+        );
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateProduct(ProductData request)
     {

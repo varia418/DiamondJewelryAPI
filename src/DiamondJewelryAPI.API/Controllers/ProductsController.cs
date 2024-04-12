@@ -40,9 +40,22 @@ public class ProductsController : ApiController
     [HttpPost]
     public async Task<IActionResult> CreateProduct(ProductData request)
     {
-        await Task.CompletedTask;
         Product product = _mapper.Map<Product>(request);
         ErrorOr<Product> createProductsResult = await _productService.CreateProduct(product);
+
+        return createProductsResult.Match(
+            menu => Ok(_mapper.Map<ProductData>(menu)),
+            errors => Problem(errors));
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateProduct(ProductData request)
+    {
+        Product product = _mapper.Map<Product>(request);
+
+        if (product.Id is null) return BadRequest();
+
+        ErrorOr<Product> createProductsResult = await _productService.UpdateProduct(product.Id, product);
 
         return createProductsResult.Match(
             menu => Ok(_mapper.Map<ProductData>(menu)),

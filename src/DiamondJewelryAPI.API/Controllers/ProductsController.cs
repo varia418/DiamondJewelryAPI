@@ -61,4 +61,14 @@ public class ProductsController : ApiController
             menu => Ok(_mapper.Map<ProductData>(menu)),
             errors => Problem(errors));
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteProduct(string id)
+    {
+        ErrorOr<Deleted> deleteProductsResult = await _productService.DeleteProduct(id);
+
+        return deleteProductsResult.Match(
+            deleted => NoContent(),
+            errors => Problem(errors));
+    }
 }

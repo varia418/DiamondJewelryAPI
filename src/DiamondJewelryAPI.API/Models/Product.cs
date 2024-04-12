@@ -24,7 +24,7 @@ public class Product : BaseModel
     [BsonElement("sold")]
     public int Sold { get; init; }
     [BsonElement("created_at")]
-    public DateTime CreatedAt { get; }
+    public DateTime CreatedAt { get; init; }
 
     public Product() { }
 
@@ -62,7 +62,7 @@ public class Product : BaseModel
         int sold = 0
     )
     {
-        return new Product(title, price, description, details, group, image, stock, sold, new DateTime());
+        return new Product(title, price, description, details, group, image, stock, sold, DateTime.Now);
     }
 }
 

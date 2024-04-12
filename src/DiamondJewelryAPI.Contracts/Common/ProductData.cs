@@ -7,7 +7,7 @@ public record ProductData(
     ProductDetails Details,
     string Group,
     string Image,
-    string CreatedAt,
+    string? CreatedAt,
     int Price = 0,
     int Stock = 0,
     int Sold = 0

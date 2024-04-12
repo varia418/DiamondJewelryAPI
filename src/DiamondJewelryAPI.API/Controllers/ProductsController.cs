@@ -42,12 +42,10 @@ public class ProductsController : ApiController
     {
         await Task.CompletedTask;
         Product product = _mapper.Map<Product>(request);
-        // ErrorOr<IEnumerable<Product>> getProductsResult = await _productService.CreateProduct();
+        ErrorOr<Product> createProductsResult = await _productService.CreateProduct(product);
 
-        // return createCommandResult.Match(
-        //     menu => Ok(_mapper.Map<MenuResponse>(menu)),
-        //     errors => Problem(errors));
-
-        return Ok(product);
+        return createProductsResult.Match(
+            menu => Ok(_mapper.Map<ProductData>(menu)),
+            errors => Problem(errors));
     }
 }

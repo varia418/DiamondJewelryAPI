@@ -2,6 +2,5 @@
 
 namespace DiamondJewelryAPI.Contracts.Products.Requests;
 
-public record UpsertProductRequest(
-    Product Product
-);
+// public record UpsertProductRequest : Product
+// { }

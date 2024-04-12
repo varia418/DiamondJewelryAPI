@@ -1,6 +1,6 @@
 namespace DiamondJewelryAPI.Contracts.Common;
 
-public record Order(
+public record OrderData(
     string Id,
     string UserId,
     OrderItem[] Items,

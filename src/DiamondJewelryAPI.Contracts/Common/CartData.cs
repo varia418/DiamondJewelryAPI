@@ -1,6 +1,6 @@
 namespace DiamondJewelryAPI.Contracts.Common;
 
-public record Cart(
+public record CartData(
     string Id,
     string UserId,
     CartItem[] Items

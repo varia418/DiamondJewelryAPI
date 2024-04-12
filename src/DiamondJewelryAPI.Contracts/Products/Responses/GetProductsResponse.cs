@@ -3,5 +3,5 @@
 namespace DiamondJewelryAPI.Contracts.Products.Responses;
 
 public record GetProductsResponse(
-    Product[] Products
+    ProductData[] Products
 );

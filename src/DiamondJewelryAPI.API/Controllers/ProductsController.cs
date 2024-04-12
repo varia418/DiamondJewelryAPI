@@ -2,6 +2,7 @@ using BuberDinner.Api.Controllers;
 
 using DiamondJewelryAPI.API.Interfaces.Persistence.Services;
 using DiamondJewelryAPI.API.Models;
+using DiamondJewelryAPI.Contracts.Common;
 using DiamondJewelryAPI.Contracts.Products.Requests;
 
 using ErrorOr;
@@ -30,5 +31,18 @@ public class ProductsController : ApiController
             products => Ok(products),
             errors => Problem(errors)
         );
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateProduct(ProductData request)
+    {
+        await Task.CompletedTask;
+        // ErrorOr<IEnumerable<Product>> getProductsResult = await _productService.CreateProduct();
+
+        // return createCommandResult.Match(
+        //     menu => Ok(_mapper.Map<MenuResponse>(menu)),
+        //     errors => Problem(errors));
+
+        return Ok(request);
     }
 }

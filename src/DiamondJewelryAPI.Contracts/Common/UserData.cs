@@ -1,6 +1,6 @@
 namespace DiamondJewelryAPI.Contracts.Common;
 
-public record User(
+public record UserData(
     string Id,
     string FullName,
     string DOB,

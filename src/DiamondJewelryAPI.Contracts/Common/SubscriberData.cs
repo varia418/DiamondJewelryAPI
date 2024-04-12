@@ -1,6 +1,6 @@
 namespace DiamondJewelryAPI.Contracts.Common;
 
-public record Subscriber(
+public record SubscriberData(
     string Id,
     string Email
 );

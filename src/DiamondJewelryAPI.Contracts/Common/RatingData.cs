@@ -1,6 +1,6 @@
 namespace DiamondJewelryAPI.Contracts.Common;
 
-public record Rating(
+public record RatingData(
     string Id,
     string UserId,
     string ProductId,

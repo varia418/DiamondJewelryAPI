@@ -3,5 +3,5 @@
 namespace DiamondJewelryAPI.Contracts.Products.Responses;
 
 public record UpsertProductResponse(
-    Product Product
+    ProductData Product
 );

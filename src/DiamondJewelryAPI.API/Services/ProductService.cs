@@ -19,6 +19,10 @@ public class ProductService : IProductService
     {
         return await _productRepository.GetAll();
     }
+    public ErrorOr<IEnumerable<string>> GetProductTitles()
+    {
+        return _productRepository.GetAllTitles();
+    }
 
     public async Task<ErrorOr<Product>> GetProduct(string id)
     {

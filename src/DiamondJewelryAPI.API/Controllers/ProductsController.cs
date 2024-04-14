@@ -48,6 +48,18 @@ public class ProductsController : ApiController
         );
     }
 
+    [HttpGet]
+    [Route("titles")]
+    public IActionResult GetProductTitles()
+    {
+        ErrorOr<IEnumerable<string>> getProductsResult = _productService.GetProductTitles();
+
+        return getProductsResult.Match(
+            titles => Ok(titles),
+            errors => Problem(errors)
+        );
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateProduct(ProductData request)
     {
@@ -55,7 +67,7 @@ public class ProductsController : ApiController
         ErrorOr<Product> createProductsResult = await _productService.CreateProduct(product);
 
         return createProductsResult.Match(
-            menu => Ok(_mapper.Map<ProductData>(menu)),
+            product => Ok(_mapper.Map<ProductData>(product)),
             errors => Problem(errors));
     }
 
@@ -69,7 +81,7 @@ public class ProductsController : ApiController
         ErrorOr<Product> createProductsResult = await _productService.UpdateProduct(product.Id, product);
 
         return createProductsResult.Match(
-            menu => Ok(_mapper.Map<ProductData>(menu)),
+            product => Ok(_mapper.Map<ProductData>(product)),
             errors => Problem(errors));
     }
 

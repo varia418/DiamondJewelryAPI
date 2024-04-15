@@ -10,11 +10,13 @@ public abstract class BaseRepository<TModel> : IRepository<TModel> where TModel 
 {
     protected readonly IMongoDatabase Database;
     protected readonly IMongoCollection<TModel> DbSet;
+    protected readonly IQueryable<TModel> QueryableCollection;
 
     protected BaseRepository(IMongoContext context)
     {
         Database = context.Database;
         DbSet = Database.GetCollection<TModel>(typeof(TModel).Name.ToLower() + "s");
+        QueryableCollection = DbSet.AsQueryable();
     }
 
     public virtual async Task<ErrorOr<IEnumerable<TModel>>> GetAll()

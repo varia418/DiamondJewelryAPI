@@ -1,4 +1,9 @@
 
+using System.ComponentModel.Design.Serialization;
+using System.Runtime.Serialization;
+
+using DiamondJewelryAPI.API.Common.Attributes;
+
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -8,22 +13,23 @@ namespace DiamondJewelryAPI.API.Models;
 public class Product : BaseModel
 {
     [BsonElement("title")]
-    public string Title { get; init; } = String.Empty;
+    public string Title { get; init; }
     [BsonElement("price")]
     public float Price { get; init; }
     [BsonElement("description")]
-    public string Description { get; init; } = String.Empty;
+    public string Description { get; init; }
     [BsonElement("details")]
     public ProductDetails Details { get; init; }
     [BsonElement("group")]
-    public string Group { get; init; } = String.Empty;
+    public string Group { get; init; }
     [BsonElement("image")]
-    public string Image { get; init; } = String.Empty;
+    public string Image { get; init; }
     [BsonElement("stock")]
     public int Stock { get; init; }
     [BsonElement("sold")]
     public int Sold { get; init; }
     [BsonElement("created_at")]
+    [BsonSerializer(typeof(BsonStringDateTimeSerializer))]
     public DateTime CreatedAt { get; init; }
 
     public Product() { }

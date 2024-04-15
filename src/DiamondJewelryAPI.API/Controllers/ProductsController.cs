@@ -60,6 +60,18 @@ public class ProductsController : ApiController
         );
     }
 
+    [HttpGet]
+    [Route("searchTitle")]
+    public IActionResult GetProductsByTitle([FromQuery] SearchProductByTitleRequest request)
+    {
+        ErrorOr<IEnumerable<Product>> getProductsByTitleResult = _productService.GetProductsByTitle(request.Keyword);
+
+        return getProductsByTitleResult.Match(
+            products => Ok(products),
+            errors => Problem(errors)
+        );
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateProduct(ProductData request)
     {

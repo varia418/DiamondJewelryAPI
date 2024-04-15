@@ -7,4 +7,5 @@ namespace DiamondJewelryAPI.API.Interfaces.Persistence;
 public interface IProductRepository : IRepository<Product>
 {
     ErrorOr<IEnumerable<string>> GetAllTitles();
+    ErrorOr<IEnumerable<Product>> GetProductsByTitle(string keyword);
 }

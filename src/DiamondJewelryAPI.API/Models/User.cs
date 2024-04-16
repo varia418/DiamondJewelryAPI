@@ -22,9 +22,10 @@ public class User : BaseModel
     public string Address { get; init; }
 
     [BsonElement("password")]
-    public string Password { get; init; }
+    public string Password { get; set; }
 
     [BsonElement("favorite_products")]
+    [BsonRepresentation(BsonType.ObjectId)]
     public IList<string> FavoriteProducts { get; init; }
 
     [BsonElement("role")]

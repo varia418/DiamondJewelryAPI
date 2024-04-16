@@ -7,6 +7,6 @@ namespace DiamondJewelryAPI.API.Interfaces.Services;
 public interface IAuthService
 {
     Task<ErrorOr<Success>> SignUp(User user);
-    Task<ErrorOr<AuthResult>> SignIn();
+    ErrorOr<AuthResult> SignIn(string email, string password);
     Task<ErrorOr<AuthResult>> OAuthSignIn();
 }

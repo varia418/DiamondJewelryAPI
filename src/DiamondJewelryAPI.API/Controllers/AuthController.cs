@@ -33,14 +33,18 @@ public class AuthController : ApiController
         ErrorOr<Success> signUpResult = await _authService.SignUp(user);
 
         return signUpResult.Match(
-            product => Ok(),
+            success => Created(),
             errors => Problem(errors));
     }
 
     [HttpPost("signin/user")]
     public IActionResult SignIn(SignInRequest request)
     {
-        return Ok(request);
+        ErrorOr<AuthResult> signInResult = _authService.SignIn(request.Email, request.Password);
+
+        return signInResult.Match(
+            authResult => Ok(authResult),
+            errors => Problem(errors));
     }
 
     [HttpPost("signin/admin")]

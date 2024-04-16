@@ -22,6 +22,15 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
         return result;
     }
 
+    public async Task<ErrorOr<IEnumerable<string>>> GetProductFilterOptions(string filter)
+    {
+        var propertyName = nameof(Product.Details).ToLower() + "." + filter;
+
+        var temp = await DbSet.DistinctAsync<string>(propertyName, FilterDefinition<Product>.Empty);
+
+        return temp.ToList();
+    }
+
     public ErrorOr<IEnumerable<Product>> GetProductsByTitle(string keyword)
     {
         var query = QueryableCollection

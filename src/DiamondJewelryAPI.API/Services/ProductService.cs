@@ -1,18 +1,28 @@
+using System.Globalization;
+using System.Reflection;
+
+using DiamondJewelryAPI.API.Common.Errors;
 using DiamondJewelryAPI.API.Interfaces.Persistence;
 using DiamondJewelryAPI.API.Interfaces.Persistence.Services;
 using DiamondJewelryAPI.API.Models;
 
 using ErrorOr;
 
+using PowerUtils.Text;
+
 namespace DiamondJewelryAPI.API.Services;
 
 public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
+    private readonly IEnumerable<string> _productFilters;
 
     public ProductService(IProductRepository productRepository)
     {
         _productRepository = productRepository;
+
+        PropertyInfo[] properties = typeof(ProductDetails).GetProperties();
+        _productFilters = properties.Select(p => p.Name.ToSnakeCase()).ToList();
     }
 
     public async Task<ErrorOr<IEnumerable<Product>>> GetProducts()
@@ -28,6 +38,17 @@ public class ProductService : IProductService
     {
         return _productRepository.GetProductsByTitle(keyword);
 
+    }
+
+    public async Task<ErrorOr<IEnumerable<string>>> GetProductFilterOptions(string filter)
+    {
+        if (!_productFilters.Contains(filter))
+            return Errors.Product.FilterNotFound;
+
+        // TextInfo info = CultureInfo.CurrentCulture.TextInfo;
+        // var filterInPascalCase = info.ToTitleCase(filter).Replace(" ", string.Empty);
+
+        return await _productRepository.GetProductFilterOptions(filter);
     }
 
     public async Task<ErrorOr<Product>> GetProduct(string id)

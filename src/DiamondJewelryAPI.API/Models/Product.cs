@@ -32,7 +32,9 @@ public class Product : BaseModel
     [BsonSerializer(typeof(BsonStringDateTimeSerializer))]
     public DateTime CreatedAt { get; init; }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public Product() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     private Product(
         string title,

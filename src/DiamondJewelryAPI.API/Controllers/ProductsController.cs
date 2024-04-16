@@ -72,6 +72,17 @@ public class ProductsController : ApiController
         );
     }
 
+    [HttpGet("filter/{filter}")]
+    public async Task<IActionResult> GetProductFilterOptions(string filter)
+    {
+        ErrorOr<IEnumerable<string>> getProductsByTitleResult = await _productService.GetProductFilterOptions(filter);
+
+        return getProductsByTitleResult.Match(
+            products => Ok(products),
+            errors => Problem(errors)
+        );
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateProduct(ProductData request)
     {

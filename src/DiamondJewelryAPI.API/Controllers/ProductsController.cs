@@ -1,6 +1,6 @@
 using BuberDinner.Api.Controllers;
 
-using DiamondJewelryAPI.API.Interfaces.Persistence.Services;
+using DiamondJewelryAPI.API.Interfaces.Services;
 using DiamondJewelryAPI.API.Models;
 using DiamondJewelryAPI.Contracts.Common;
 using DiamondJewelryAPI.Contracts.Products.Requests;

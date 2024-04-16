@@ -1,9 +1,8 @@
-using System.Globalization;
 using System.Reflection;
 
 using DiamondJewelryAPI.API.Common.Errors;
-using DiamondJewelryAPI.API.Interfaces.Persistence;
-using DiamondJewelryAPI.API.Interfaces.Persistence.Services;
+using DiamondJewelryAPI.API.Interfaces.Persistence.Repositories;
+using DiamondJewelryAPI.API.Interfaces.Services;
 using DiamondJewelryAPI.API.Models;
 
 using ErrorOr;
@@ -44,9 +43,6 @@ public class ProductService : IProductService
     {
         if (!_productFilters.Contains(filter))
             return Errors.Product.FilterNotFound;
-
-        // TextInfo info = CultureInfo.CurrentCulture.TextInfo;
-        // var filterInPascalCase = info.ToTitleCase(filter).Replace(" ", string.Empty);
 
         return await _productRepository.GetProductFilterOptions(filter);
     }

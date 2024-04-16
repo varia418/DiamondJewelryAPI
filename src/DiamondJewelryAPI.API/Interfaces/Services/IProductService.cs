@@ -2,7 +2,7 @@ using DiamondJewelryAPI.API.Models;
 
 using ErrorOr;
 
-namespace DiamondJewelryAPI.API.Interfaces.Persistence.Services;
+namespace DiamondJewelryAPI.API.Interfaces.Services;
 
 public interface IProductService
 {

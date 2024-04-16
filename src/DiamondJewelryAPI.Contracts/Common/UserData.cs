@@ -1,19 +1,14 @@
 namespace DiamondJewelryAPI.Contracts.Common;
 
 public record UserData(
-    string Id,
+    string? Id,
     string FullName,
-    string DOB,
-    string Tel,
+    string? DOB,
+    string? Tel,
     string Email,
-    string Address,
-    string Password,
-    List<FavoriteProduct> FavoriteProducts,
+    string? Address,
+    string? Password,
+    List<string>? FavoriteProducts,
     string Role,
     string Provider
-);
-
-public record FavoriteProduct(
-    long Timestamp,
-    string Date
 );

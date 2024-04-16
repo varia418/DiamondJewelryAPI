@@ -1,14 +1,11 @@
-using DiamondJewelryAPI.API.Common.Attributes;
 using DiamondJewelryAPI.API.Interfaces.Persistence;
-using DiamondJewelryAPI.API.Interfaces.Persistence.Services;
+using DiamondJewelryAPI.API.Interfaces.Persistence.Repositories;
+using DiamondJewelryAPI.API.Interfaces.Services;
 using DiamondJewelryAPI.API.Models;
 using DiamondJewelryAPI.API.Repositories;
 using DiamondJewelryAPI.API.Services;
 
 using Microsoft.Extensions.Options;
-
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
 
 namespace DiamondJewelryAPI.API;
 
@@ -23,9 +20,12 @@ public static class DependencyInjection
                     sp.GetRequiredService<IOptions<DiamondJewelryDBSettings>>().Value);
 
         services.AddScoped<IMongoContext, MongoContext>();
-        services.AddScoped<IProductRepository, ProductRepository>();
 
+        services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IProductService, ProductService>();
+
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IAuthService, AuthService>();
 
         return services;
     }

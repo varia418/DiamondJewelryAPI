@@ -1,4 +1,5 @@
 using DiamondJewelryAPI.API.Interfaces.Persistence;
+using DiamondJewelryAPI.API.Interfaces.Persistence.Repositories;
 using DiamondJewelryAPI.API.Models;
 
 using ErrorOr;

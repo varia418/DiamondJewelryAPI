@@ -41,7 +41,7 @@ public class AuthService : IAuthService
         }
 
         var tokenString = _jwtTokenGenerator.GenerateToken(user);
-        return new AuthResult(user.Id, tokenString);
+        return new AuthResult(user.Id!, tokenString);
     }
 
     public async Task<ErrorOr<Success>> SignUp(User user)

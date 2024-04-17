@@ -41,4 +41,18 @@ public class OrderService : IOrderService
     {
         return await _orderRepository.Update(id, order);
     }
+
+    public async Task<ErrorOr<Order>> UpdateOrderStatus(string id, string status)
+    {
+        var getOrderResult = await _orderRepository.GetById(id);
+
+        if (getOrderResult.IsError)
+        {
+            return getOrderResult.Errors;
+        }
+
+        getOrderResult.Value.UpdateStatus(status);
+
+        return await _orderRepository.Update(id, getOrderResult.Value);
+    }
 }

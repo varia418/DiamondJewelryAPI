@@ -10,5 +10,6 @@ public interface IOrderService
     Task<ErrorOr<Order>> GetOrder(string id);
     Task<ErrorOr<Order>> CreateOrder(Order order);
     Task<ErrorOr<Order>> UpdateOrder(string id, Order order);
+    Task<ErrorOr<Order>> UpdateOrderStatus(string id, string status);
     Task<ErrorOr<Deleted>> DeleteOrder(string id);
 }

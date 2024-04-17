@@ -20,7 +20,7 @@ public class Order : BaseModel
     public string Address { get; init; }
 
     [BsonElement("status")]
-    public string Status { get; init; }
+    public string Status { get; private set; }
 
     [BsonElement("VAT_fee")]
     public double VATFee { get; init; }
@@ -35,4 +35,9 @@ public class Order : BaseModel
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public Order() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
+    public void UpdateStatus(string status)
+    {
+        Status = status;
+    }
 }

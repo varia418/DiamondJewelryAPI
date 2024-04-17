@@ -9,4 +9,9 @@ public class BsonStringDateTimeSerializer : SerializerBase<DateTime>
     {
         return DateTime.Parse(context.Reader.ReadString());
     }
+
+    public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, DateTime value)
+    {
+        context.Writer.WriteString(value.ToString());
+    }
 }

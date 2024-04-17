@@ -73,6 +73,16 @@ public class OrdersController : ApiController
             errors => Problem(errors));
     }
 
+    [HttpPut("updateStatus/{id}")]
+    public async Task<IActionResult> UpdateOrderStatus(string id, [FromBody] string status)
+    {
+        ErrorOr<Order> updateOrderResult = await _orderService.UpdateOrderStatus(id, status);
+
+        return updateOrderResult.Match(
+            order => Ok(_mapper.Map<OrderData>(order)),
+            errors => Problem(errors));
+    }
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteOrder(string id)
     {

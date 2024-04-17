@@ -47,13 +47,13 @@ public class UsersController : ApiController
         );
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteUser(string id)
+    [HttpGet("likedProducts/{id}")]
+    public async Task<IActionResult> GetLikedProducts(string id)
     {
-        ErrorOr<Success> getUserResult = await _userService.DeleteUser(id);
+        ErrorOr<IEnumerable<string>> getUserLikedProductsResult = await _userService.GetUserLikedProducts(id);
 
-        return getUserResult.Match(
-            user => NoContent(),
+        return getUserLikedProductsResult.Match(
+            likedProducts => Ok(likedProducts),
             errors => Problem(errors)
         );
     }
@@ -120,5 +120,16 @@ public class UsersController : ApiController
         return addLikedProductResult.Match(
             success => NoContent(),
             errors => Problem(errors));
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUser(string id)
+    {
+        ErrorOr<Success> getUserResult = await _userService.DeleteUser(id);
+
+        return getUserResult.Match(
+            user => NoContent(),
+            errors => Problem(errors)
+        );
     }
 }

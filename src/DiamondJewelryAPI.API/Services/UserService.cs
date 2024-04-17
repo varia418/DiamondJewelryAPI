@@ -64,6 +64,15 @@ public class UserService : IUserService
         return user;
     }
 
+    public async Task<ErrorOr<IEnumerable<string>>> GetUserLikedProducts(string id)
+    {
+        var getUserResult = await _userRepository.GetById(id);
+
+        if (getUserResult.IsError) return getUserResult.Errors;
+
+        return getUserResult.Value.FavoriteProducts.ToArray();
+    }
+
     public async Task<ErrorOr<IEnumerable<User>>> GetUsers()
     {
         ErrorOr<IEnumerable<User>> result = await _userRepository.GetAll();

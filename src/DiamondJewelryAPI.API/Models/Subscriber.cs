@@ -1,3 +1,5 @@
+using DiamondJewelryAPI.API.Models.Common;
+
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 

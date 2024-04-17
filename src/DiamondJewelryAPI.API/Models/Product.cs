@@ -1,6 +1,6 @@
 
-using System.ComponentModel.Design.Serialization;
 using DiamondJewelryAPI.API.Common.Attributes;
+using DiamondJewelryAPI.API.Models.Common;
 
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;

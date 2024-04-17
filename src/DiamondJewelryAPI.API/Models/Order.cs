@@ -10,6 +10,7 @@ namespace DiamondJewelryAPI.API.Models;
 public class Order : BaseModel
 {
     [BsonElement("user_id")]
+    [BsonRepresentation(BsonType.ObjectId)]
     public string UserId { get; init; }
 
     [BsonElement("items")]
@@ -22,14 +23,14 @@ public class Order : BaseModel
     public string Status { get; init; }
 
     [BsonElement("VAT_fee")]
-    public string VATFee { get; init; }
+    public double VATFee { get; init; }
 
     [BsonElement("total_cost")]
-    public string TotalCost { get; init; }
+    public double TotalCost { get; init; }
 
     [BsonElement("created_at")]
     [BsonSerializer(typeof(BsonStringDateTimeSerializer))]
-    public string CreatedAt { get; init; }
+    public DateTime CreatedAt { get; init; }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public Order() { }

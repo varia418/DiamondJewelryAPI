@@ -1,4 +1,5 @@
 using DiamondJewelryAPI.API.Common.Attributes;
+using DiamondJewelryAPI.API.Models.Common;
 
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
@@ -9,9 +10,11 @@ namespace DiamondJewelryAPI.API.Models;
 public class Rating : BaseModel
 {
     [BsonElement("user_id")]
+    [BsonRepresentation(BsonType.ObjectId)]
     public string UserId { get; init; }
 
     [BsonElement("product_id")]
+    [BsonRepresentation(BsonType.ObjectId)]
     public string ProductId { get; init; }
 
     [BsonElement("rating_star")]
@@ -22,7 +25,7 @@ public class Rating : BaseModel
 
     [BsonElement("createdAt")]
     [BsonSerializer(typeof(BsonStringDateTimeSerializer))]
-    public string CreatedAt { get; init; }
+    public DateTime CreatedAt { get; init; }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public Rating() { }

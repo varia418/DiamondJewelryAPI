@@ -9,6 +9,7 @@ namespace DiamondJewelryAPI.API.Models;
 public class Cart : BaseModel
 {
     [BsonElement("user_id")]
+    [BsonRepresentation(BsonType.ObjectId)]
     public string UserId { get; init; }
 
     [BsonElement("items")]

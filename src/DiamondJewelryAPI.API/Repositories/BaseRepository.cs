@@ -1,3 +1,4 @@
+using DiamondJewelryAPI.API.Common.Errors;
 using DiamondJewelryAPI.API.Interfaces.Persistence;
 
 using ErrorOr;
@@ -28,6 +29,7 @@ public abstract class BaseRepository<TModel> : IRepository<TModel> where TModel 
     public virtual async Task<ErrorOr<TModel>> GetById(string id)
     {
         var data = await DbSet.Find(FilterId(id)).SingleOrDefaultAsync();
+        if (data is null) return Errors.General.NotFound(typeof(TModel).Name, id);
         return data;
     }
 

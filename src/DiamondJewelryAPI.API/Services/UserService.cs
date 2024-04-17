@@ -20,10 +20,29 @@ public class UserService : IUserService
         return await _userRepository.Create(user);
     }
 
+    public async Task<ErrorOr<User>> GetUserById(string id)
+    {
+        var user = await _userRepository.GetById(id);
+        return user;
+    }
+
     public async Task<ErrorOr<IEnumerable<User>>> GetUsers()
     {
         ErrorOr<IEnumerable<User>> result = await _userRepository.GetAll();
         return result;
+    }
+
+    public async Task<ErrorOr<Success>> RemoveLikedProduct(User user, string productId)
+    {
+        user.FavoriteProducts.Remove(productId);
+        var result = await _userRepository.Update(user.Id, user);
+
+        if (result.IsError)
+        {
+            return result.Errors;
+        }
+
+        return Result.Success;
     }
 
     public async Task<ErrorOr<User>> UpdateUser(string id, User user)

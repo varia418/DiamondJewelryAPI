@@ -60,4 +60,18 @@ public class UsersController : ApiController
             user => Ok(_mapper.Map<UserData>(user)),
             errors => Problem(errors));
     }
+
+    [HttpPut("removeLikedProduct/{userId}")]
+    public async Task<IActionResult> RemoveLikedProduct([FromRoute] string userId, [FromBody] string productId)
+    {
+        // TODO: Check for user existence
+        ErrorOr<User> findUserResult = await _userService.GetUserById(userId);
+        if (findUserResult.IsError) return Problem(findUserResult.Errors);
+
+        ErrorOr<Success> removeLikedProductResult = await _userService.RemoveLikedProduct(findUserResult.Value, productId);
+
+        return removeLikedProductResult.Match(
+            success => NoContent(),
+            errors => Problem(errors));
+    }
 }

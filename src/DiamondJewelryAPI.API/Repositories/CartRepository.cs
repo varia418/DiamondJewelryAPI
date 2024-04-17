@@ -2,6 +2,7 @@ using DiamondJewelryAPI.API.Common.Errors;
 using DiamondJewelryAPI.API.Interfaces.Persistence;
 using DiamondJewelryAPI.API.Interfaces.Persistence.Repositories;
 using DiamondJewelryAPI.API.Models;
+using DiamondJewelryAPI.API.Models.Common;
 
 using ErrorOr;
 

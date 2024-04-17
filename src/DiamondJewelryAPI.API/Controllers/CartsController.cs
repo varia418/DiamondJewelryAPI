@@ -50,6 +50,17 @@ public class CartsController : ApiController
         );
     }
 
+    [HttpGet("cartItems/{userId}")]
+    public async Task<IActionResult> GetUserCartItems(string userId)
+    {
+        ErrorOr<IEnumerable<CartItem>> getCartItemsResult = await _cartService.GetUserCartItems(userId);
+
+        return getCartItemsResult.Match(
+            cartItems => Ok(_mapper.Map<IEnumerable<CartItemData>>(cartItems)),
+            errors => Problem(errors)
+        );
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateCart(CartData request)
     {
@@ -96,7 +107,7 @@ public class CartsController : ApiController
     }
 
     [HttpPut("addItem/{userId}")]
-    public async Task<IActionResult> AddCartItem([FromRoute]string userId, [FromBody] CartItemData cartItemData)
+    public async Task<IActionResult> AddCartItem([FromRoute] string userId, [FromBody] CartItemData cartItemData)
     {
         CartItem cartItem = _mapper.Map<CartItem>(cartItemData);
 

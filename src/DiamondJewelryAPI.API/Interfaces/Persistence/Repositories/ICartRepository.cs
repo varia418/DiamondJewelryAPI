@@ -1,4 +1,5 @@
 using DiamondJewelryAPI.API.Models;
+using DiamondJewelryAPI.API.Models.Common;
 
 using ErrorOr;
 

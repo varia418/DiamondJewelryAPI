@@ -45,9 +45,10 @@ public abstract class BaseRepository<TModel> : IRepository<TModel> where TModel 
         return obj;
     }
 
-    public async virtual Task Delete(string id)
+    public async virtual Task<ErrorOr<Success>> Delete(string id)
     {
         await DbSet.DeleteOneAsync(FilterId(id));
+        return Result.Success;
     }
 
     private static FilterDefinition<TModel> FilterId(string key)

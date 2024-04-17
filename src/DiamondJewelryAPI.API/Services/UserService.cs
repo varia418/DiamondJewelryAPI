@@ -48,6 +48,16 @@ public class UserService : IUserService
         return await _userRepository.Create(user);
     }
 
+    public async Task<ErrorOr<Success>> DeleteUser(string id)
+    {
+        return await _userRepository.Delete(id);
+    }
+
+    public async Task<ErrorOr<User>> GetUser(string id)
+    {
+        return await _userRepository.GetById(id);
+    }
+
     public async Task<ErrorOr<User>> GetUserById(string id)
     {
         var user = await _userRepository.GetById(id);

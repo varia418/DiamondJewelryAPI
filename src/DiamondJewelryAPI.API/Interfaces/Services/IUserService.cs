@@ -7,6 +7,8 @@ namespace DiamondJewelryAPI.API.Interfaces.Services;
 public interface IUserService
 {
     Task<ErrorOr<IEnumerable<User>>> GetUsers();
+    Task<ErrorOr<User>> GetUser(string id);
+    Task<ErrorOr<Success>> DeleteUser(string id);
     Task<ErrorOr<User>> GetUserById(string id);
     Task<ErrorOr<User>> CreateUser(User user);
     Task<ErrorOr<User>> UpdateUser(string id, User user);

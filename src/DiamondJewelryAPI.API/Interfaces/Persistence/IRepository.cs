@@ -8,5 +8,5 @@ public interface IRepository<TModel> : IDisposable where TModel : class
     Task<ErrorOr<TModel>> GetById(string id);
     Task<ErrorOr<TModel>> Create(TModel model);
     Task<ErrorOr<TModel>> Update(string id, TModel model);
-    Task Delete(string id);
+    Task<ErrorOr<Success>> Delete(string id);
 }

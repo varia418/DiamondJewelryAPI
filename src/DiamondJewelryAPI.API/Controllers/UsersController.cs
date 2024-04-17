@@ -36,6 +36,28 @@ public class UsersController : ApiController
         );
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetUser(string id)
+    {
+        ErrorOr<User> getUserResult = await _userService.GetUser(id);
+
+        return getUserResult.Match(
+            user => Ok(_mapper.Map<UserData>(user)),
+            errors => Problem(errors)
+        );
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUser(string id)
+    {
+        ErrorOr<Success> getUserResult = await _userService.DeleteUser(id);
+
+        return getUserResult.Match(
+            user => NoContent(),
+            errors => Problem(errors)
+        );
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateProduct(UserData request)
     {

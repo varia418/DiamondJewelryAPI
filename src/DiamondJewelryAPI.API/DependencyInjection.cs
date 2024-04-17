@@ -39,6 +39,18 @@ public static class DependencyInjection
         services.AddScoped<ISubscriberRepository, SubscriberRepository>();
         services.AddScoped<ISubscriberService, SubscriberService>();
 
+        services.AddScoped<IRatingRepository, RatingRepository>();
+        services.AddScoped<IRatingService, RatingService>();
+
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<IOrderService, OrderService>();
+
+        services.AddScoped<IContactRepository, ContactRepository>();
+        services.AddScoped<IContactService, ContactService>();
+
+        services.AddScoped<ICartRepository, CartRepository>();
+        services.AddScoped<ICartService, CartService>();
+
         return services;
     }
 

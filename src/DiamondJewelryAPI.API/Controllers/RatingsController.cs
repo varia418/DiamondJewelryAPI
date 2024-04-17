@@ -37,6 +37,17 @@ public class RatingsController : ApiController
         );
     }
 
+    [HttpGet("productId")]
+    public async Task<IActionResult> GetProductRatings([FromQuery] string productId)
+    {
+        ErrorOr<IEnumerable<Rating>> getRatingsResult = await _ratingService.GetProductRatings(productId);
+
+        return getRatingsResult.Match(
+            ratings => Ok(ratings),
+            errors => Problem(errors)
+        );
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetRatingDetails(string id)
     {

@@ -10,10 +10,12 @@ namespace DiamondJewelryAPI.API.Services;
 public class RatingService : IRatingService
 {
     private readonly IRatingRepository _ratingRepository;
+    private readonly IProductRepository _productRepository;
 
-    public RatingService(IRatingRepository ratingRepository)
+    public RatingService(IRatingRepository ratingRepository, IProductRepository productRepository)
     {
         _ratingRepository = ratingRepository;
+        _productRepository = productRepository;
     }
 
     public async Task<ErrorOr<Rating>> CreateRating(Rating rating)
@@ -25,6 +27,15 @@ public class RatingService : IRatingService
     {
         await _ratingRepository.Delete(id);
         return Result.Deleted;
+    }
+
+    public async Task<ErrorOr<IEnumerable<Rating>>> GetProductRatings(string productId)
+    {
+        var getProductResult = await _productRepository.GetById(productId);
+
+        if (getProductResult.IsError) return getProductResult.Errors;
+
+        return _ratingRepository.GetByProductId(productId);
     }
 
     public async Task<ErrorOr<Rating>> GetRating(string id)

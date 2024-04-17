@@ -87,9 +87,9 @@ public class ProductsController : ApiController
     public async Task<IActionResult> CreateProduct(ProductData request)
     {
         Product product = _mapper.Map<Product>(request);
-        ErrorOr<Product> createProductsResult = await _productService.CreateProduct(product);
+        ErrorOr<Product> createProductResult = await _productService.CreateProduct(product);
 
-        return createProductsResult.Match(
+        return createProductResult.Match(
             product => Ok(_mapper.Map<ProductData>(product)),
             errors => Problem(errors));
     }
@@ -101,9 +101,9 @@ public class ProductsController : ApiController
 
         if (product.Id is null) return BadRequest();
 
-        ErrorOr<Product> createProductsResult = await _productService.UpdateProduct(product.Id, product);
+        ErrorOr<Product> updateProductResult = await _productService.UpdateProduct(product.Id, product);
 
-        return createProductsResult.Match(
+        return updateProductResult.Match(
             product => Ok(_mapper.Map<ProductData>(product)),
             errors => Problem(errors));
     }

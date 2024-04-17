@@ -11,4 +11,6 @@ public interface IUserService
     Task<ErrorOr<User>> CreateUser(User user);
     Task<ErrorOr<User>> UpdateUser(string id, User user);
     Task<ErrorOr<Success>> RemoveLikedProduct(User user, string productId);
+    Task<ErrorOr<Success>> RemoveAllLikedProducts(User user);
+    Task<ErrorOr<Success>> AddLikedProduct(User user, string productId);
 }

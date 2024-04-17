@@ -64,13 +64,38 @@ public class UsersController : ApiController
     [HttpPut("removeLikedProduct/{userId}")]
     public async Task<IActionResult> RemoveLikedProduct([FromRoute] string userId, [FromBody] string productId)
     {
-        // TODO: Check for user existence
         ErrorOr<User> findUserResult = await _userService.GetUserById(userId);
         if (findUserResult.IsError) return Problem(findUserResult.Errors);
 
         ErrorOr<Success> removeLikedProductResult = await _userService.RemoveLikedProduct(findUserResult.Value, productId);
 
         return removeLikedProductResult.Match(
+            success => NoContent(),
+            errors => Problem(errors));
+    }
+
+    [HttpPut("removeAllLikedProduct/{userId}")]
+    public async Task<IActionResult> RemoveAllLikedProducts([FromRoute] string userId)
+    {
+        ErrorOr<User> findUserResult = await _userService.GetUserById(userId);
+        if (findUserResult.IsError) return Problem(findUserResult.Errors);
+
+        ErrorOr<Success> removeAllLikedProductsResult = await _userService.RemoveAllLikedProducts(findUserResult.Value);
+
+        return removeAllLikedProductsResult.Match(
+            success => NoContent(),
+            errors => Problem(errors));
+    }
+
+    [HttpPut("addLikedProduct/{userId}")]
+    public async Task<IActionResult> AddLikedProduct([FromRoute] string userId, [FromBody] string productId)
+    {
+        ErrorOr<User> findUserResult = await _userService.GetUserById(userId);
+        if (findUserResult.IsError) return Problem(findUserResult.Errors);
+
+        ErrorOr<Success> addLikedProductResult = await _userService.AddLikedProduct(findUserResult.Value, productId);
+
+        return addLikedProductResult.Match(
             success => NoContent(),
             errors => Problem(errors));
     }

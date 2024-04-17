@@ -1,3 +1,4 @@
+using DiamondJewelryAPI.API.Common.Errors;
 using DiamondJewelryAPI.API.Interfaces.Persistence.Repositories;
 using DiamondJewelryAPI.API.Interfaces.Services;
 using DiamondJewelryAPI.API.Models;
@@ -9,10 +10,37 @@ namespace DiamondJewelryAPI.API.Services;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly IProductRepository _productRepository;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, IProductRepository productRepository)
     {
         _userRepository = userRepository;
+        _productRepository = productRepository;
+    }
+
+    public async Task<ErrorOr<Success>> AddLikedProduct(User user, string productId)
+    {
+        if (user.FavoriteProducts.Contains(productId))
+        {
+            return Errors.User.DuplicatedLikedProductId;
+        }
+
+        var getProductResult = await _productRepository.GetById(productId);
+
+        if (getProductResult.IsError)
+        {
+            return getProductResult.Errors;
+        }
+
+        user.FavoriteProducts.Add(productId);
+        var result = await _userRepository.Update(user.Id!, user);
+
+        if (result.IsError)
+        {
+            return result.Errors;
+        }
+
+        return Result.Success;
     }
 
     public async Task<ErrorOr<User>> CreateUser(User user)
@@ -32,10 +60,23 @@ public class UserService : IUserService
         return result;
     }
 
+    public async Task<ErrorOr<Success>> RemoveAllLikedProducts(User user)
+    {
+        user.FavoriteProducts.Clear();
+        var result = await _userRepository.Update(user.Id!, user);
+
+        if (result.IsError)
+        {
+            return result.Errors;
+        }
+
+        return Result.Success;
+    }
+
     public async Task<ErrorOr<Success>> RemoveLikedProduct(User user, string productId)
     {
         user.FavoriteProducts.Remove(productId);
-        var result = await _userRepository.Update(user.Id, user);
+        var result = await _userRepository.Update(user.Id!, user);
 
         if (result.IsError)
         {

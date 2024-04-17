@@ -12,5 +12,8 @@ public static partial class Errors
         public static Error IncorrectPassword => Error.Validation(
             code: "User.IncorrectPassword",
             description: "Incorrect password.");
+        public static Error DuplicatedLikedProductId => Error.Validation(
+            code: "User.DuplicatedLikedProductId",
+            description: "Duplicated liked product id.");
     }
 }

@@ -35,4 +35,29 @@ public class UsersController : ApiController
             errors => Problem(errors)
         );
     }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateProduct(UserData request)
+    {
+        User user = _mapper.Map<User>(request);
+        ErrorOr<User> createUserResult = await _userService.CreateUser(user);
+
+        return createUserResult.Match(
+            user => Ok(_mapper.Map<UserData>(user)),
+            errors => Problem(errors));
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateProduct(UserData request)
+    {
+        User user = _mapper.Map<User>(request);
+
+        if (user.Id is null) return BadRequest();
+
+        ErrorOr<User> createProductsResult = await _userService.UpdateUser(user.Id, user);
+
+        return createProductsResult.Match(
+            user => Ok(_mapper.Map<UserData>(user)),
+            errors => Problem(errors));
+    }
 }

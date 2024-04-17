@@ -15,9 +15,20 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
+    public async Task<ErrorOr<User>> CreateUser(User user)
+    {
+        return await _userRepository.Create(user);
+    }
+
     public async Task<ErrorOr<IEnumerable<User>>> GetUsers()
     {
         ErrorOr<IEnumerable<User>> result = await _userRepository.GetAll();
         return result;
+    }
+
+    public async Task<ErrorOr<User>> UpdateUser(string id, User user)
+    {
+        return await _userRepository.Update(id, user);
+
     }
 }

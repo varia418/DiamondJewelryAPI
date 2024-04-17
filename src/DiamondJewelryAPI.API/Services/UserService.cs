@@ -43,6 +43,15 @@ public class UserService : IUserService
         return Result.Success;
     }
 
+    public async Task<ErrorOr<bool>> CheckIfProductIsLiked(string userId, string productId)
+    {
+        var getUserResult = await _userRepository.GetById(userId);
+
+        if (getUserResult.IsError) return getUserResult.Errors;
+
+        return getUserResult.Value.FavoriteProducts.Contains(productId);
+    }
+
     public async Task<ErrorOr<User>> CreateUser(User user)
     {
         return await _userRepository.Create(user);

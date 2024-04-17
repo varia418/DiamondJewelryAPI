@@ -58,6 +58,17 @@ public class UsersController : ApiController
         );
     }
 
+    [HttpGet("existsLikedProduct/{userId}")]
+    public async Task<IActionResult> CheckIfProductIsLiked(string userId, [FromQuery] string productId)
+    {
+        ErrorOr<bool> checkResult = await _userService.CheckIfProductIsLiked(userId, productId);
+
+        return checkResult.Match(
+            result => Ok(result),
+            errors => Problem(errors)
+        );
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateProduct(UserData request)
     {

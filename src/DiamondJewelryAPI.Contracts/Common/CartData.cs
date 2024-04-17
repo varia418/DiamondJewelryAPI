@@ -3,10 +3,10 @@ namespace DiamondJewelryAPI.Contracts.Common;
 public record CartData(
     string Id,
     string UserId,
-    CartItem[] Items
+    CartItemData[] Items
 );
 
-public record CartItem(
-    string ProductId,
+public record CartItemData(
+    string Id,
     int Quantity
 );

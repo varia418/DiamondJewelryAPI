@@ -2,6 +2,8 @@ using BuberDinner.Api.Controllers;
 
 using DiamondJewelryAPI.API.Interfaces.Services;
 using DiamondJewelryAPI.API.Models;
+using DiamondJewelryAPI.API.Models.Common;
+using DiamondJewelryAPI.Contracts.Carts.Requests;
 using DiamondJewelryAPI.Contracts.Common;
 
 using ErrorOr;
@@ -67,6 +69,43 @@ public class CartsController : ApiController
         if (cart.Id is null) return BadRequest();
 
         ErrorOr<Cart> updateCartResult = await _cartService.UpdateCart(cart.Id, cart);
+
+        return updateCartResult.Match(
+            cart => Ok(_mapper.Map<CartData>(cart)),
+            errors => Problem(errors));
+    }
+
+    [HttpPut("removeItem/{userId}")]
+    public async Task<IActionResult> RemoveCartItem(string userId, [FromBody] string productId)
+    {
+        ErrorOr<Cart> updateCartResult = await _cartService.RemoveCartItem(userId, productId);
+
+        return updateCartResult.Match(
+            cart => Ok(_mapper.Map<CartData>(cart)),
+            errors => Problem(errors));
+    }
+
+    [HttpPut("removeAllItems/{userId}")]
+    public async Task<IActionResult> RemoveAllCartItems(string userId)
+    {
+        ErrorOr<Cart> updateCartResult = await _cartService.RemoveAllCartItems(userId);
+
+        return updateCartResult.Match(
+            cart => Ok(_mapper.Map<CartData>(cart)),
+            errors => Problem(errors));
+    }
+
+    [HttpPut("addItem/{userId}")]
+    public async Task<IActionResult> AddCartItem([FromRoute]string userId, [FromBody] CartItemData cartItemData)
+    {
+        CartItem cartItem = _mapper.Map<CartItem>(cartItemData);
+
+        if (cartItem.ProductId is null) return BadRequest();
+
+        ErrorOr<Cart> updateCartResult = await _cartService.AddCartItem(userId, cartItem);
+
+        var cart = updateCartResult.Value;
+        var temp = _mapper.Map<CartData>(cart);
 
         return updateCartResult.Match(
             cart => Ok(_mapper.Map<CartData>(cart)),

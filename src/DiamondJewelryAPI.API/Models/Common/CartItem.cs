@@ -3,11 +3,11 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace DiamondJewelryAPI.API.Models.Common;
 
-public record CartItem()
+public record CartItem
 {
     [BsonElement("product_id")]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string ProductId { get; init; } = String.Empty;
+    public string ProductId { get; init; }
 
     [BsonElement("quantity")]
     public int Quantity { get; init; }

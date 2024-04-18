@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DiamondJewelryAPI.API.Controllers;
 
-[AllowAnonymous]
 public class ProductsController : ApiController
 {
     private readonly IProductService _productService;
@@ -27,6 +26,7 @@ public class ProductsController : ApiController
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetProducts([FromQuery] GetProductsRequest request)
     {
         ErrorOr<IEnumerable<Product>> getProductsResult = await _productService.GetProducts();
@@ -38,6 +38,7 @@ public class ProductsController : ApiController
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetProductDetails(string id)
     {
         ErrorOr<Product> getProductDetailsResult = await _productService.GetProduct(id);
@@ -50,6 +51,7 @@ public class ProductsController : ApiController
 
     [HttpGet]
     [Route("titles")]
+    [AllowAnonymous]
     public IActionResult GetProductTitles()
     {
         ErrorOr<IEnumerable<string>> getProductsResult = _productService.GetProductTitles();
@@ -62,6 +64,7 @@ public class ProductsController : ApiController
 
     [HttpGet]
     [Route("searchTitle")]
+    [AllowAnonymous]
     public IActionResult GetProductsByTitle([FromQuery] SearchProductByTitleRequest request)
     {
         ErrorOr<IEnumerable<Product>> getProductsByTitleResult = _productService.GetProductsByTitle(request.Keyword);
@@ -73,6 +76,7 @@ public class ProductsController : ApiController
     }
 
     [HttpGet("filter/{filter}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetProductFilterOptions(string filter)
     {
         ErrorOr<IEnumerable<string>> getProductsByTitleResult = await _productService.GetProductFilterOptions(filter);

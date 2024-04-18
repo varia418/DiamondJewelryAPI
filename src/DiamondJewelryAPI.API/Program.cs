@@ -13,7 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
         options.AddDefaultPolicy(
             policy =>
             {
-                policy.WithOrigins("http://localhost:3000", "https://diamondjewelry.netlify.app/");
+                policy.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
             });
     });
 

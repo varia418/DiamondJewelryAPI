@@ -1,10 +1,16 @@
+using System.Linq.Expressions;
+using System.Reflection;
+
 using DiamondJewelryAPI.API.Interfaces.Persistence;
 using DiamondJewelryAPI.API.Interfaces.Persistence.Repositories;
 using DiamondJewelryAPI.API.Models;
+using DiamondJewelryAPI.Contracts.Products.Requests;
 
 using ErrorOr;
 
 using MongoDB.Driver;
+
+using PowerUtils.Text;
 
 namespace DiamondJewelryAPI.API.Repositories;
 
@@ -30,6 +36,35 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
         var temp = await DbSet.DistinctAsync<string>(propertyName, FilterDefinition<Product>.Empty);
 
         return temp.ToList();
+    }
+
+    public async Task<ErrorOr<IEnumerable<Product>>> GetProductsByFilter(GetProductsRequest filters)
+    {
+        var parameter = Expression.Parameter(typeof(ProductDetails), "productDetails");
+        PropertyInfo[] productDetailsProperties = typeof(ProductDetails).GetProperties();
+        var builder = Builders<Product>.Filter;
+        FilterDefinition<Product>? filter = null;
+
+        foreach (var productDetailsProperty in productDetailsProperties)
+        {
+            FieldDefinition<Product, string> field = "details." + productDetailsProperty.Name.ToSnakeCase();
+            string? value = (string?)filters.GetType().GetProperty(productDetailsProperty.Name).GetValue(filters);
+
+            if (value is null || value == "Tất cả") continue;
+
+            if (filter is null)
+            {
+                filter = builder.Eq(field, value);
+            }
+            else
+            {
+                filter = filter & builder.Eq(field, value);
+            }
+
+        }
+
+        var result = await DbSet.FindAsync(filter ?? FilterDefinition<Product>.Empty);
+        return result.ToList();
     }
 
     public ErrorOr<IEnumerable<Product>> GetProductsByTitle(string keyword)

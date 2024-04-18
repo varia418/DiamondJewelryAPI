@@ -4,6 +4,7 @@ using DiamondJewelryAPI.API.Common.Errors;
 using DiamondJewelryAPI.API.Interfaces.Persistence.Repositories;
 using DiamondJewelryAPI.API.Interfaces.Services;
 using DiamondJewelryAPI.API.Models;
+using DiamondJewelryAPI.Contracts.Products.Requests;
 
 using ErrorOr;
 
@@ -24,9 +25,9 @@ public class ProductService : IProductService
         _productFilters = properties.Select(p => p.Name.ToSnakeCase()).ToList();
     }
 
-    public async Task<ErrorOr<IEnumerable<Product>>> GetProducts()
+    public async Task<ErrorOr<IEnumerable<Product>>> GetProducts(GetProductsRequest filters)
     {
-        return await _productRepository.GetAll();
+        return await _productRepository.GetProductsByFilter(filters);
     }
     public ErrorOr<IEnumerable<string>> GetProductTitles()
     {

@@ -27,9 +27,9 @@ public class ProductsController : ApiController
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<IActionResult> GetProducts([FromQuery] GetProductsRequest request)
+    public async Task<IActionResult> GetProducts([FromQuery] GetProductsRequest filters)
     {
-        ErrorOr<IEnumerable<Product>> getProductsResult = await _productService.GetProducts();
+        ErrorOr<IEnumerable<Product>> getProductsResult = await _productService.GetProducts(filters);
 
         return getProductsResult.Match(
             products => Ok(products),

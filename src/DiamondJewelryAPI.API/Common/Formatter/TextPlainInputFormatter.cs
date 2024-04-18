@@ -7,6 +7,7 @@ public class TextPlainInputFormatter : TextInputFormatter
     public TextPlainInputFormatter()
     {
         SupportedMediaTypes.Add("text/plain");
+        SupportedMediaTypes.Add("application/text");
         SupportedEncodings.Add(Encoding.UTF8);
         SupportedEncodings.Add(Encoding.Unicode);
     }

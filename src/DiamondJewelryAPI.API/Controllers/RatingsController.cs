@@ -13,12 +13,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DiamondJewelryAPI.API.Controllers;
 
-[AllowAnonymous]
 public class RatingsController : ApiController
 {
     private readonly IRatingService _ratingService;
     private readonly IMapper _mapper;
-
 
     public RatingsController(IRatingService ratingService, IMapper mapper)
     {
@@ -27,6 +25,7 @@ public class RatingsController : ApiController
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetRatings()
     {
         ErrorOr<IEnumerable<Rating>> getRatingsResult = await _ratingService.GetRatings();
@@ -38,6 +37,7 @@ public class RatingsController : ApiController
     }
 
     [HttpGet("productId")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetProductRatings([FromQuery] string productId)
     {
         ErrorOr<IEnumerable<Rating>> getRatingsResult = await _ratingService.GetProductRatings(productId);
@@ -49,6 +49,7 @@ public class RatingsController : ApiController
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetRatingDetails(string id)
     {
         ErrorOr<Rating> getRatingDetailsResult = await _ratingService.GetRating(id);
@@ -60,6 +61,7 @@ public class RatingsController : ApiController
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> CreateRating(RatingData request)
     {
         Rating rating = _mapper.Map<Rating>(request);

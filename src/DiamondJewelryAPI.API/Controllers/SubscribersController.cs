@@ -13,12 +13,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DiamondJewelryAPI.API.Controllers;
 
-[AllowAnonymous]
 public class SubscribersController : ApiController
 {
     private readonly ISubscriberService _subscriberService;
     private readonly IMapper _mapper;
-
 
     public SubscribersController(ISubscriberService subscriberService, IMapper mapper)
     {
@@ -49,6 +47,7 @@ public class SubscribersController : ApiController
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> CreateSubscriber(SubscriberData request)
     {
         Subscriber subscriber = _mapper.Map<Subscriber>(request);

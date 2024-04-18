@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DiamondJewelryAPI.API.Controllers;
 
-[AllowAnonymous]
 public class UsersController : ApiController
 {
     private readonly IUserService _userService;

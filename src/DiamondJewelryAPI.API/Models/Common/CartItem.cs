@@ -12,3 +12,5 @@ public record CartItem
     [BsonElement("quantity")]
     public int Quantity { get; init; }
 }
+
+public record CartItemDetails(Product? Product, int Quantity);

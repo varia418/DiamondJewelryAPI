@@ -48,12 +48,12 @@ public class CartsController : ApiController
     }
 
     [HttpGet("cartItems/{userId}")]
-    public async Task<IActionResult> GetUserCartItems(string userId)
+    public async Task<IActionResult> GetUserCartItemsWithDetails(string userId)
     {
-        ErrorOr<IEnumerable<CartItem>> getCartItemsResult = await _cartService.GetUserCartItems(userId);
+        ErrorOr<IEnumerable<CartItemDetails>> getCartItemsResult = await _cartService.GetUserCartItemsWithDetails(userId);
 
         return getCartItemsResult.Match(
-            cartItems => Ok(_mapper.Map<IEnumerable<CartItemData>>(cartItems)),
+            cartItems => Ok(_mapper.Map<IEnumerable<CartItemDetailsData>>(cartItems)),
             errors => Problem(errors)
         );
     }

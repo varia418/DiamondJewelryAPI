@@ -9,7 +9,7 @@ public interface ICartService
 {
     Task<ErrorOr<IEnumerable<Cart>>> GetCarts();
     Task<ErrorOr<Cart>> GetCart(string id);
-    Task<ErrorOr<IEnumerable<CartItem>>> GetUserCartItems(string userId);
+    Task<ErrorOr<IEnumerable<CartItemDetails>>> GetUserCartItemsWithDetails(string userId);
     Task<ErrorOr<Cart>> CreateCart(Cart cart);
     Task<ErrorOr<Cart>> UpdateCart(string id, Cart cart);
     Task<ErrorOr<Cart>> RemoveCartItem(string userId, string productId);

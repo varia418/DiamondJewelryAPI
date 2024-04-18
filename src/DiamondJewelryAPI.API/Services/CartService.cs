@@ -56,7 +56,7 @@ public class CartService : ICartService
         return await _cartRepository.GetAll();
     }
 
-    public async Task<ErrorOr<IEnumerable<CartItem>>> GetUserCartItems(string userId)
+    public async Task<ErrorOr<IEnumerable<CartItemDetails>>> GetUserCartItemsWithDetails(string userId)
     {
         var getUserResult = await _userRepository.GetById(userId);
         if (getUserResult.IsError) return getUserResult.Errors;
@@ -64,7 +64,10 @@ public class CartService : ICartService
         var getUserCartResult = _cartRepository.GetByUserId(userId);
         if (getUserCartResult.IsError) return getUserCartResult.Errors;
 
-        return getUserCartResult.Value.Items.ToArray();
+        var cartItems = getUserCartResult.Value.Items;
+        var getCartItemsDetailsResult = _cartRepository.GetCartItemsWithDetails(cartItems);
+
+        return getCartItemsDetailsResult;
     }
 
     public async Task<ErrorOr<Cart>> RemoveAllCartItems(string userId)

@@ -13,12 +13,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DiamondJewelryAPI.API.Controllers;
 
-[AllowAnonymous]
 public class ContactsController : ApiController
 {
     private readonly IContactService _contactService;
     private readonly IMapper _mapper;
-
 
     public ContactsController(IContactService contactService, IMapper mapper)
     {
@@ -32,7 +30,7 @@ public class ContactsController : ApiController
         ErrorOr<IEnumerable<Contact>> getContactsResult = await _contactService.GetContacts();
 
         return getContactsResult.Match(
-            contacts => Ok(contacts),
+            contacts => Ok(_mapper.Map<IEnumerable<ContactData>>(contacts)),
             errors => Problem(errors)
         );
     }
@@ -49,6 +47,7 @@ public class ContactsController : ApiController
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> CreateContact(ContactData request)
     {
         Contact contact = _mapper.Map<Contact>(request);

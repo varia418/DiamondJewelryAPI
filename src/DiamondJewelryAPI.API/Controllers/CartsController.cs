@@ -3,19 +3,16 @@ using BuberDinner.Api.Controllers;
 using DiamondJewelryAPI.API.Interfaces.Services;
 using DiamondJewelryAPI.API.Models;
 using DiamondJewelryAPI.API.Models.Common;
-using DiamondJewelryAPI.Contracts.Carts.Requests;
 using DiamondJewelryAPI.Contracts.Common;
 
 using ErrorOr;
 
 using MapsterMapper;
 
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiamondJewelryAPI.API.Controllers;
 
-[AllowAnonymous]
 public class CartsController : ApiController
 {
     private readonly ICartService _cartService;

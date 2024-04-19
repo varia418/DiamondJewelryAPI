@@ -63,6 +63,18 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
 
         }
 
+        if (filters.Group is not null)
+        {
+            if (filter is null)
+            {
+                filter = builder.Eq(p => p.Group, filters.Group);
+            }
+            else
+            {
+                filter = filter & builder.Eq(p => p.Group, filters.Group);
+            }
+        }
+
         var result = await DbSet.FindAsync(filter ?? FilterDefinition<Product>.Empty);
         return result.ToList();
     }

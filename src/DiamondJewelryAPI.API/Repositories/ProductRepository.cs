@@ -42,7 +42,7 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
         var parameter = Expression.Parameter(typeof(ProductDetails), "productDetails");
         PropertyInfo[] productDetailsProperties = typeof(ProductDetails).GetProperties();
-        var builder = Builders<Product>.Filter;
+        var filterBuilder = Builders<Product>.Filter;
         FilterDefinition<Product>? filter = null;
 
         foreach (var productDetailsProperty in productDetailsProperties)
@@ -54,11 +54,11 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
 
             if (filter is null)
             {
-                filter = builder.Eq(field, value);
+                filter = filterBuilder.Eq(field, value);
             }
             else
             {
-                filter = filter & builder.Eq(field, value);
+                filter = filter & filterBuilder.Eq(field, value);
             }
 
         }
@@ -67,15 +67,33 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
         {
             if (filter is null)
             {
-                filter = builder.Eq(p => p.Group, filters.Group);
+                filter = filterBuilder.Eq(p => p.Group, filters.Group);
             }
             else
             {
-                filter = filter & builder.Eq(p => p.Group, filters.Group);
+                filter = filter & filterBuilder.Eq(p => p.Group, filters.Group);
             }
         }
 
-        var result = await DbSet.FindAsync(filter ?? FilterDefinition<Product>.Empty);
+        var sortBuilder = Builders<Product>.Sort;
+        SortDefinition<Product>? sort = null;
+        switch (filters.SortMode)
+        {
+            case "latest":
+                sort = sortBuilder.Descending(p => p.CreatedAt);
+                break;
+            case "oldest":
+                sort = sortBuilder.Ascending(p => p.CreatedAt);
+                break;
+            case "mostPopular":
+                sort = sortBuilder.Descending(p => p.Sold);
+                break;
+            default:
+                sort = null;
+                break;
+        }
+
+        var result = await DbSet.FindAsync(filter ?? FilterDefinition<Product>.Empty, new FindOptions<Product, Product>() { Sort = sort });
         return result.ToList();
     }
 

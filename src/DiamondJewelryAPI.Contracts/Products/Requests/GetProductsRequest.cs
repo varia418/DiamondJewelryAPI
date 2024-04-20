@@ -9,6 +9,6 @@ public record GetProductsRequest(
     string? Color,
     string? Group,
     string? Type,
-    string SortMode = "latest",
+    string SortMode = "latest", // oldest, mostPopular
     int Limit = 0
 );

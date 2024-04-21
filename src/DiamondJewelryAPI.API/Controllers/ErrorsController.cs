@@ -8,7 +8,7 @@ namespace BuberDinner.Api.Controllers;
 
 public class ErrorsController : ControllerBase
 {
-    [Route("/error")]
+    [Route("/api/v2/error")]
     public IActionResult Error()
     {
         Exception? exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;

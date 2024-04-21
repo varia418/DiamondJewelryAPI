@@ -29,7 +29,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 {
-    app.UseExceptionHandler("/error");
+    app.UseExceptionHandler("/api/v2/error");
     if (!app.Environment.IsDevelopment())
     {
         app.UseForwardedHeaders(new ForwardedHeadersOptions

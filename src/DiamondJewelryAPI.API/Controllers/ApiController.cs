@@ -8,7 +8,7 @@ namespace BuberDinner.Api.Controllers;
 
 [ApiController]
 [Authorize]
-[Route("[controller]")]
+[Route("/api/v2/[controller]")]
 public class ApiController : ControllerBase
 {
     protected IActionResult Problem(List<Error> errors)

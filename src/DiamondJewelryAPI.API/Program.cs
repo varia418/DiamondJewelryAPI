@@ -1,6 +1,8 @@
 using DiamondJewelryAPI.API;
 using DiamondJewelryAPI.API.Common.Mapping;
 
+using Microsoft.AspNetCore.HttpOverrides;
+
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddControllers(options =>
@@ -30,6 +32,10 @@ var app = builder.Build();
     app.UseExceptionHandler("/error");
     if (!app.Environment.IsDevelopment())
     {
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+        });
         app.UseHttpsRedirection();
     }
     app.UseCors();

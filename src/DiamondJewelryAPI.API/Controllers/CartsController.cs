@@ -83,6 +83,20 @@ public class CartsController : ApiController
             errors => Problem(errors));
     }
 
+    [HttpPut("updateQuantity/{userId}")]
+    public async Task<IActionResult> UpdateCartItemQuantity([FromRoute] string userId, [FromBody] CartItemData request)
+    {
+        CartItem cartItemData = _mapper.Map<CartItem>(request);
+
+        if (userId is null) return BadRequest();
+
+        ErrorOr<Cart> updateCartResult = await _cartService.UpdateCartItemQuantity(userId, cartItemData);
+
+        return updateCartResult.Match(
+            cart => NoContent(),
+            errors => Problem(errors));
+    }
+
     [HttpPut("removeItem/{userId}")]
     public async Task<IActionResult> RemoveCartItem(string userId, [FromBody] string productId)
     {

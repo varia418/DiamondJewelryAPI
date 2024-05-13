@@ -10,7 +10,7 @@ public record CartItem
     public string ProductId { get; init; }
 
     [BsonElement("quantity")]
-    public int Quantity { get; init; }
+    public int Quantity { get; set; }
 }
 
 public record CartItemDetails(Product? Product, int Quantity);

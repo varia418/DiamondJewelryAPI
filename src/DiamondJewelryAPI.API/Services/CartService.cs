@@ -70,6 +70,25 @@ public class CartService : ICartService
         return getCartItemsDetailsResult;
     }
 
+    public async Task<ErrorOr<Cart>> UpdateCartItemQuantity(string userId, CartItem cartItemData)
+    {
+        var getUserResult = await _userRepository.GetById(userId);
+        if (getUserResult.IsError) return getUserResult.Errors;
+
+        var getUserCartResult = _cartRepository.GetByUserId(userId);
+        if (getUserCartResult.IsError) return getUserCartResult.Errors;
+
+        var cart = getUserCartResult.Value;
+        var cartItem = cart.Items.FirstOrDefault(ci => ci.ProductId == cartItemData.ProductId);
+        if (cartItem is null)
+        {
+            return Errors.Cart.ItemNotFound(cart.Id!, cartItemData.ProductId);
+        }
+
+        cartItem.Quantity = cartItemData.Quantity;
+        return await _cartRepository.Update(cart.Id!, cart);
+    }
+
     public async Task<ErrorOr<Cart>> RemoveAllCartItems(string userId)
     {
         var getUserResult = await _userRepository.GetById(userId);

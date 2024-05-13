@@ -1,13 +1,13 @@
 namespace DiamondJewelryAPI.Contracts.Common;
 
 public record CartData(
-    string Id,
+    string? Id,
     string UserId,
     CartItemData[] Items
 );
 
 public record CartItemData(
-    string Id,
+    string ProductId,
     int Quantity
 );
 

@@ -17,7 +17,7 @@ public class Order : BaseModel
     public IList<CartItem> Items { get; init; }
 
     [BsonElement("address")]
-    public string Address { get; init; }
+    public string Address { get; set; }
 
     [BsonElement("status")]
     public string Status { get; private set; }

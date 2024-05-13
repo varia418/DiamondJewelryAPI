@@ -1,14 +1,14 @@
 namespace DiamondJewelryAPI.Contracts.Common;
 
 public record OrderData(
-    string Id,
+    string? Id,
     string UserId,
     OrderItem[] Items,
-    string Address,
-    string Status,
+    string? Address,
     long VATFee,
     long TotalCost,
-    string CreatedAt
+    string CreatedAt,
+    string Status = "Đang xử lý"
 );
 
 public record OrderItem(

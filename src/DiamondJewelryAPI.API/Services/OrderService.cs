@@ -10,14 +10,21 @@ namespace DiamondJewelryAPI.API.Services;
 public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
+    private readonly IUserRepository _userRepository;
 
-    public OrderService(IOrderRepository orderRepository)
+
+    public OrderService(IOrderRepository orderRepository, IUserRepository userRepository)
     {
         _orderRepository = orderRepository;
+        _userRepository = userRepository;
     }
 
     public async Task<ErrorOr<Order>> CreateOrder(Order order)
     {
+        var getUserResult = await _userRepository.GetById(order.UserId);
+        if (getUserResult.IsError) return getUserResult.Errors;
+
+        order.Address = getUserResult.Value.Address;
         return await _orderRepository.Create(order);
     }
 

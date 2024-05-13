@@ -105,4 +105,13 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
         var result = query.ToList();
         return result;
     }
+
+    public ErrorOr<IEnumerable<Product>> GetProductsByIds(IEnumerable<string> ids)
+    {
+        var query = QueryableCollection
+            .Where(p => ids.Contains(p.Id));
+
+        var result = query.ToList();
+        return result;
+    }
 }

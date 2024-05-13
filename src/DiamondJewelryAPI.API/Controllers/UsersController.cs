@@ -45,10 +45,10 @@ public class UsersController : ApiController
         );
     }
 
-    [HttpGet("likedProducts/{id}")]
-    public async Task<IActionResult> GetLikedProducts(string id)
+    [HttpGet("likedProducts/{userId}")]
+    public async Task<IActionResult> GetLikedProducts(string userId)
     {
-        ErrorOr<IEnumerable<string>> getUserLikedProductsResult = await _userService.GetUserLikedProducts(id);
+        ErrorOr<IEnumerable<Product>> getUserLikedProductsResult = await _userService.GetUserLikedProducts(userId);
 
         return getUserLikedProductsResult.Match(
             likedProducts => Ok(likedProducts),

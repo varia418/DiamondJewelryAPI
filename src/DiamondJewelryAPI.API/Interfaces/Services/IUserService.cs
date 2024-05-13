@@ -8,7 +8,7 @@ public interface IUserService
 {
     Task<ErrorOr<IEnumerable<User>>> GetUsers();
     Task<ErrorOr<User>> GetUser(string id);
-    Task<ErrorOr<IEnumerable<string>>> GetUserLikedProducts(string id);
+    Task<ErrorOr<IEnumerable<Product>>> GetUserLikedProducts(string userId);
     Task<ErrorOr<bool>> CheckIfProductIsLiked(string userId, string productId);
     Task<ErrorOr<Success>> DeleteUser(string id);
     Task<ErrorOr<User>> GetUserById(string id);

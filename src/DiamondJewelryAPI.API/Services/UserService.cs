@@ -73,13 +73,15 @@ public class UserService : IUserService
         return user;
     }
 
-    public async Task<ErrorOr<IEnumerable<string>>> GetUserLikedProducts(string id)
+    public async Task<ErrorOr<IEnumerable<Product>>> GetUserLikedProducts(string userId)
     {
-        var getUserResult = await _userRepository.GetById(id);
-
+        var getUserResult = await _userRepository.GetById(userId);
         if (getUserResult.IsError) return getUserResult.Errors;
 
-        return getUserResult.Value.FavoriteProducts.ToArray();
+        var favoriteProductIds = getUserResult.Value.FavoriteProducts;
+        var getFavoriteProductsResult = _productRepository.GetProductsByIds(favoriteProductIds);
+
+        return getFavoriteProductsResult;
     }
 
     public async Task<ErrorOr<IEnumerable<User>>> GetUsers()

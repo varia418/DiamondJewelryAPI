@@ -28,9 +28,25 @@ public class CartService : ICartService
         if (getUserResult.IsError) return getUserResult.Errors;
 
         var getUserCartResult = _cartRepository.GetByUserId(userId);
-        if (getUserCartResult.IsError) return getUserCartResult.Errors;
+        Cart? cart = null;
+        if (getUserCartResult.IsError && getUserCartResult.Errors.Any(e => e.Type == ErrorType.NotFound))
+        {
+            Cart newCart = new Cart(userId);
 
-        var cart = getUserCartResult.Value;
+            var createCartResult = CreateCart(newCart).Result;
+            if (createCartResult.IsError) return createCartResult.Errors;
+
+            cart = createCartResult.Value;
+        }
+        else if (getUserCartResult.IsError)
+        {
+            return getUserCartResult.Errors;
+        }
+        else
+        {
+            cart = getUserCartResult.Value;
+        }
+
         cart.Items.Add(cartItem);
         return await _cartRepository.Update(cart.Id!, cart);
     }

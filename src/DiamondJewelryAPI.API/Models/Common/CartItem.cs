@@ -7,7 +7,7 @@ public record CartItem
 {
     [BsonElement("product_id")]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string ProductId { get; init; }
+    public required string ProductId { get; init; }
 
     [BsonElement("quantity")]
     public int Quantity { get; set; }

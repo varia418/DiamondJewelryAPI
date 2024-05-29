@@ -29,12 +29,10 @@ var builder = WebApplication.CreateBuilder(args);
         .AddMappings();
 
     StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
-
 }
 
 var app = builder.Build();
 {
-
     app.UseExceptionHandler("/api/v2/error");
     if (!app.Environment.IsDevelopment())
     {

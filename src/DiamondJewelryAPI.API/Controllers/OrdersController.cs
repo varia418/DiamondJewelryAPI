@@ -10,6 +10,10 @@ using MapsterMapper;
 
 using Microsoft.AspNetCore.Mvc;
 
+using Newtonsoft.Json;
+
+using Stripe;
+
 namespace DiamondJewelryAPI.API.Controllers;
 
 public class OrdersController : ApiController
@@ -89,5 +93,18 @@ public class OrdersController : ApiController
         return deleteOrdersResult.Match(
             deleted => NoContent(),
             errors => Problem(errors));
+    }
+
+    [HttpPost("create-payment-intent")]
+    public ActionResult CreatePaymentIntent(OrderData request)
+    {
+        var paymentIntentService = new PaymentIntentService();
+        var paymentIntent = paymentIntentService.Create(new PaymentIntentCreateOptions
+        {
+            Amount = request.TotalCost,
+            Currency = "VND",
+        });
+
+        return Ok(new { clientSecret = paymentIntent.ClientSecret });
     }
 }

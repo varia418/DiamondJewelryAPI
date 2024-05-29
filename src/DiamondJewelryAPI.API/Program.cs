@@ -3,6 +3,8 @@ using DiamondJewelryAPI.API.Common.Mapping;
 
 using Microsoft.AspNetCore.HttpOverrides;
 
+using Stripe;
+
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddControllers(options =>
@@ -25,10 +27,14 @@ var builder = WebApplication.CreateBuilder(args);
         .AddPersistence(builder.Configuration)
         .AddAuth(builder.Configuration)
         .AddMappings();
+
+    StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+
 }
 
 var app = builder.Build();
 {
+
     app.UseExceptionHandler("/api/v2/error");
     if (!app.Environment.IsDevelopment())
     {
